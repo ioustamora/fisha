@@ -20,6 +20,7 @@
     "lint": "eslint . --ext .js --ext .vue --fix"
   },
   "dependencies": {
+    "@popperjs/core": "^2.11.2",
     "core-js": "~3.12.1",
     "near-api-js": "~0.43.1",
     "vue": "~2.6.11"

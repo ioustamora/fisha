@@ -1,4 +1,4 @@
-import Vue from "vue"
+import * as Vue from "vue/dist/vue"
 import App from "./App.vue"
 
 import { initContract } from "./utils"

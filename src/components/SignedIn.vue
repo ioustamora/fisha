@@ -1,9 +1,31 @@
 <template>
-  <div>
-    <span>{{ accountId }}</span>
-    <span>{{ accountBalance }}</span>
-    <button class="link" style="float: right" v-on:click="logout">Sign out</button>
-    <main>
+  <main>
+    <div class="row">
+      <div class="col">
+        <ul class="list-group">
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            Nemo
+            <span class="badge bg-primary rounded-pill">14</span>
+          </li>
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            Goldie
+            <span class="badge bg-primary rounded-pill">2</span>
+          </li>
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            Bubbles
+            <span class="badge bg-primary rounded-pill">1</span>
+          </li>
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            Dory
+            <span class="badge bg-primary rounded-pill">1</span>
+          </li>
+        </ul>
+      </div>
+      <div class="col">
+        <div class="card text-white bg-secondary mb-3" style="max-width: 20rem;">
+          <div class="card-header">Header</div>
+          <div class="card-body">
+            <div>
       <h1>
         <label
           for="greeting"
@@ -28,7 +50,30 @@
       <p>
         If you have questions or issues - feel free to contact as by email: support@fisha.co.in
       </p>
-    </main>
+    </div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card text-white bg-secondary mb-3" style="max-width: 20rem;">
+          <div class="card-header">Wallet Data</div>
+          <div class="card-body">
+            <p class="card-text">
+              {{ accountBalance }}
+            </p>
+          </div>
+        </div>
+        <div class="card text-white bg-secondary mb-3" style="max-width: 20rem;">
+          <div class="card-header">Dev Notes</div>
+          <div class="card-body">
+            <p class="card-text">
+              Some dev notes) Lock 1 near token to start game.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
 
     <Notification
       v-show="notificationVisible"
@@ -38,7 +83,7 @@
       :contractId="contractId"
       :visible="false"
     />
-  </div>
+  </main>
 </template>
 
 <script>

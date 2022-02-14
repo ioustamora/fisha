@@ -1,4 +1,4 @@
-const CONTRACT_NAME = process.env.VUE_APP_CONTRACT_NAME ||'dev-1644621463460-56997790541024'
+const CONTRACT_NAME = process.env.VUE_APP_CONTRACT_NAME ||'dev-1644875716170-13049770373765'
 //const CONTRACT_NAME = process.env.VUE_APP_CONTRACT_NAME ||'fisha'
 
 function getConfig(env) {
@@ -19,7 +19,7 @@ function getConfig(env) {
       return {
         networkId: 'testnet',
         nodeUrl: 'https://rpc.testnet.near.org',
-        contractName: 'dev-1644621463460-56997790541024',//CONTRACT_NAME,
+        contractName: 'dev-1644875716170-13049770373765',//CONTRACT_NAME,
         walletUrl: 'https://wallet.testnet.near.org',
         helperUrl: 'https://helper.testnet.near.org',
         explorerUrl: 'https://explorer.testnet.near.org',
