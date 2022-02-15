@@ -1,7 +1,52 @@
 <template>
 
   <main>
-    <div class="row">
+   
+<div class="row">
+  <div class="col">
+    <div class="card text-white bg-primary mb-3" style="max-width: 20rem;">
+  <div class="card-header">Header</div>
+  <div class="card-body">
+    <h4 class="card-title">Primary card title</h4>
+    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+  </div>
+</div>
+  </div>
+  <div class="col">
+    <div class="card text-white bg-warning mb-3" style="max-width: 20rem;">
+  <div class="card-header">Header</div>
+  <div class="card-body">
+    <h4 class="card-title">Warning card title</h4>
+    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+  </div>
+</div>
+  </div>
+  <div class="col">
+    <div class="card text-white bg-success mb-3" style="max-width: 20rem;">
+  <div class="card-header">Header</div>
+  <div class="card-body">
+    <h4 class="card-title">Success card title</h4>
+    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+  </div>
+</div>
+
+  </div>
+  <div class="col">
+    <div class="card text-white bg-info mb-3" style="max-width: 20rem;">
+  <div class="card-header">Header</div>
+  <div class="card-body">
+    <h4 class="card-title">Info card title</h4>
+    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+  </div>
+</div>
+  </div>
+</div>
+
+<div class="row">
+  <hr/>
+</div>
+
+ <div class="row">
     <div id="carouselExampleDark" class="carousel slide" data-bs-ride="carousel">
   <div class="carousel-indicators">
     <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -52,13 +97,9 @@
     <span class="visually-hidden">Next</span>
   </button>
 </div> 
-</div>
-<div class="row">
-  <div class="col"></div>
-  <div class="col"></div>
-  <div class="col"></div>
-  <div class="col"></div>
-</div>
+    </div>
+
+
   </main>
 </template>
 
