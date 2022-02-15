@@ -1,0 +1,18 @@
+/Users/ioustamora/near/fisha/contract/target/rls/debug/deps/typenum-d760054e979041ff.rmeta: /Users/ioustamora/.cargo/registry/src/github.com-1ecc6299db9ec823/typenum-1.12.0/src/lib.rs /Users/ioustamora/.cargo/registry/src/github.com-1ecc6299db9ec823/typenum-1.12.0/src/bit.rs /Users/ioustamora/.cargo/registry/src/github.com-1ecc6299db9ec823/typenum-1.12.0/src/int.rs /Users/ioustamora/.cargo/registry/src/github.com-1ecc6299db9ec823/typenum-1.12.0/src/marker_traits.rs /Users/ioustamora/.cargo/registry/src/github.com-1ecc6299db9ec823/typenum-1.12.0/src/operator_aliases.rs /Users/ioustamora/.cargo/registry/src/github.com-1ecc6299db9ec823/typenum-1.12.0/src/private.rs /Users/ioustamora/.cargo/registry/src/github.com-1ecc6299db9ec823/typenum-1.12.0/src/type_operators.rs /Users/ioustamora/.cargo/registry/src/github.com-1ecc6299db9ec823/typenum-1.12.0/src/uint.rs /Users/ioustamora/.cargo/registry/src/github.com-1ecc6299db9ec823/typenum-1.12.0/src/array.rs /Users/ioustamora/near/fisha/contract/target/rls/debug/build/typenum-48a9b44538c7f22b/out/op.rs /Users/ioustamora/near/fisha/contract/target/rls/debug/build/typenum-48a9b44538c7f22b/out/consts.rs
+
+/Users/ioustamora/near/fisha/contract/target/rls/debug/deps/typenum-d760054e979041ff.d: /Users/ioustamora/.cargo/registry/src/github.com-1ecc6299db9ec823/typenum-1.12.0/src/lib.rs /Users/ioustamora/.cargo/registry/src/github.com-1ecc6299db9ec823/typenum-1.12.0/src/bit.rs /Users/ioustamora/.cargo/registry/src/github.com-1ecc6299db9ec823/typenum-1.12.0/src/int.rs /Users/ioustamora/.cargo/registry/src/github.com-1ecc6299db9ec823/typenum-1.12.0/src/marker_traits.rs /Users/ioustamora/.cargo/registry/src/github.com-1ecc6299db9ec823/typenum-1.12.0/src/operator_aliases.rs /Users/ioustamora/.cargo/registry/src/github.com-1ecc6299db9ec823/typenum-1.12.0/src/private.rs /Users/ioustamora/.cargo/registry/src/github.com-1ecc6299db9ec823/typenum-1.12.0/src/type_operators.rs /Users/ioustamora/.cargo/registry/src/github.com-1ecc6299db9ec823/typenum-1.12.0/src/uint.rs /Users/ioustamora/.cargo/registry/src/github.com-1ecc6299db9ec823/typenum-1.12.0/src/array.rs /Users/ioustamora/near/fisha/contract/target/rls/debug/build/typenum-48a9b44538c7f22b/out/op.rs /Users/ioustamora/near/fisha/contract/target/rls/debug/build/typenum-48a9b44538c7f22b/out/consts.rs
+
+/Users/ioustamora/.cargo/registry/src/github.com-1ecc6299db9ec823/typenum-1.12.0/src/lib.rs:
+/Users/ioustamora/.cargo/registry/src/github.com-1ecc6299db9ec823/typenum-1.12.0/src/bit.rs:
+/Users/ioustamora/.cargo/registry/src/github.com-1ecc6299db9ec823/typenum-1.12.0/src/int.rs:
+/Users/ioustamora/.cargo/registry/src/github.com-1ecc6299db9ec823/typenum-1.12.0/src/marker_traits.rs:
+/Users/ioustamora/.cargo/registry/src/github.com-1ecc6299db9ec823/typenum-1.12.0/src/operator_aliases.rs:
+/Users/ioustamora/.cargo/registry/src/github.com-1ecc6299db9ec823/typenum-1.12.0/src/private.rs:
+/Users/ioustamora/.cargo/registry/src/github.com-1ecc6299db9ec823/typenum-1.12.0/src/type_operators.rs:
+/Users/ioustamora/.cargo/registry/src/github.com-1ecc6299db9ec823/typenum-1.12.0/src/uint.rs:
+/Users/ioustamora/.cargo/registry/src/github.com-1ecc6299db9ec823/typenum-1.12.0/src/array.rs:
+/Users/ioustamora/near/fisha/contract/target/rls/debug/build/typenum-48a9b44538c7f22b/out/op.rs:
+/Users/ioustamora/near/fisha/contract/target/rls/debug/build/typenum-48a9b44538c7f22b/out/consts.rs:
+
+# env-dep:TYPENUM_BUILD_CONSTS=/Users/ioustamora/near/fisha/contract/target/rls/debug/build/typenum-48a9b44538c7f22b/out/consts.rs
+# env-dep:TYPENUM_BUILD_OP=/Users/ioustamora/near/fisha/contract/target/rls/debug/build/typenum-48a9b44538c7f22b/out/op.rs

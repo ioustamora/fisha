@@ -6,14 +6,12 @@
  * 2. get_greeting: accepts an account_id and returns the greeting saved for it, defaulting to
  *    "Hello"
  *
- * Learn more about writing NEAR smart contracts with Rust:
- * https://github.com/near/near-sdk-rs
  *
  */
 
 // To conserve gas, efficient serialization is achieved through Borsh (http://borsh.io/)
 use near_sdk::borsh::{self, BorshDeserialize, BorshSerialize};
-use near_sdk::{env, near_bindgen, setup_alloc};
+use near_sdk::{env, near_bindgen, setup_alloc, AccountId, Timestamp, Promise};
 use near_sdk::collections::LookupMap;
 
 setup_alloc!();
@@ -24,23 +22,66 @@ setup_alloc!();
 #[derive(BorshDeserialize, BorshSerialize)]
 pub struct Welcome {
     records: LookupMap<String, String>,
+    lockers: LookupMap<AccountId, Timestamp>,
 }
 
 impl Default for Welcome {
   fn default() -> Self {
     Self {
       records: LookupMap::new(b"a".to_vec()),
+      lockers: LookupMap::new(b"a".to_vec()),
     }
   }
 }
 
 #[near_bindgen]
 impl Welcome {
+    ///lock 1 near in contract  to start game
+    #[payable]
+    pub fn init_locker(&mut self) {
+        let account_id = env::signer_account_id();
+        let timestamp: Timestamp = Timestamp::default();
+        let amount: u128 = 1_000_000_000_000_000_000_000_000;
+
+        if env::attached_deposit() == amount {
+            self.lockers.insert(&account_id, &timestamp);
+        } else {
+            env::panic(b"wrong deposit amount or insufficient funds");
+        }
+
+        
+    }
+
+    ///current user has locker and can play
+    pub fn has_locker(&self, account_id: AccountId) -> bool {
+        match self.lockers.get(&account_id) {
+            Some(_) => true,
+            None => false,
+        }
+    }
+    ///current user can claim his 1 near locked back to wallet
+    pub fn can_unlock(&self, account_id: AccountId) -> bool {
+        if self.has_locker(account_id) {
+            return true;
+        }
+        //todo: must check timestamp + (365 * epoch) * 2)
+        false
+    }
+
+    ///withdraw(and/or unlock) 1 near from contract to user wallet
+    pub fn unlock(&self) {
+        let amount: u128 = 1_000_000_000_000_000_000_000_000;
+        let account_id = env::signer_account_id();
+        if self.can_unlock(account_id.clone()) {
+            Promise::new(account_id).transfer(amount);
+        }
+    }
+
     pub fn set_greeting(&mut self, message: String) {
         let account_id = env::signer_account_id();
 
         // Use env::log to record logs permanently to the blockchain!
-        env::log(format!("Saving greeting '{}' for account '{}'", message, account_id,).as_bytes());
+       // env::log(format!("Saving greeting '{}' for account '{}'", message, account_id,).as_bytes());
 
         self.records.insert(&account_id, &message);
     }
