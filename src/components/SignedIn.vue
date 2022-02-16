@@ -5,25 +5,25 @@
         <ul class="list-group">
           <li class="list-group-item d-flex justify-content-between align-items-center">
             Nemo
-            <span class="badge bg-primary rounded-pill">14</span>
+            <span class="badge bg-primary rounded-pill">1</span>
           </li>
           <li class="list-group-item d-flex justify-content-between align-items-center">
             Goldie
-            <span class="badge bg-primary rounded-pill">2</span>
+            <span class="badge bg-primary rounded-pill">0</span>
           </li>
           <li class="list-group-item d-flex justify-content-between align-items-center">
             Bubbles
-            <span class="badge bg-primary rounded-pill">1</span>
+            <span class="badge bg-primary rounded-pill">0</span>
           </li>
           <li class="list-group-item d-flex justify-content-between align-items-center">
             Dory
-            <span class="badge bg-primary rounded-pill">1</span>
+            <span class="badge bg-primary rounded-pill">0</span>
           </li>
         </ul>
       </div>
       <div class="col">
         <div class="card text-white bg-secondary mb-3" style="max-width: 20rem;">
-          <div class="card-header">Header</div>
+          <div class="card-header">Caviar</div>
           <div class="card-body">
             <div>
       <h1>
@@ -59,7 +59,7 @@
           <div class="card-header">Wallet Data</div>
           <div class="card-body">
             <p class="card-text">
-              {{ accountBalance }}
+              some data
             </p>
           </div>
         </div>
@@ -107,12 +107,6 @@ export default {
 
   data: function () {
     return {
-      accountBalance: {
-          "total": "0",
-          "stateStaked": "0",
-          "staked": "0",
-          "available": "0"
-      },
       savedGreeting: "",
       newGreeting: "",
       notificationVisible: false,
@@ -135,7 +129,7 @@ export default {
   },
 
   created() {
-    this.getAccountBalance()
+    
   },
 
   methods: {
@@ -147,16 +141,6 @@ export default {
           this.savedGreeting = greetingFromContract
           this.newGreeting = greetingFromContract
         })
-    },
-
-    getAccountBalance () {
-      let self = this;
-      window.walletConnection.account().getAccountBalance()
-      .then(function(result){
-        console.log(result)
-        self.accountBalance = result;
-        self.accountBalance.total = utils.format.formatNearAmount(self.accountBalance.total);
-      })
     },
 
     saveGreeting: async function (event) {

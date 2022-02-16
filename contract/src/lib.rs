@@ -29,7 +29,7 @@ impl Default for Welcome {
   fn default() -> Self {
     Self {
       records: LookupMap::new(b"a".to_vec()),
-      lockers: LookupMap::new(b"a".to_vec()),
+      lockers: LookupMap::new(b"lockers".to_vec()),
     }
   }
 }
@@ -95,16 +95,15 @@ impl Welcome {
             None => "Hello".to_string(),
         }
     }
+
+    pub fn get_random(&self) -> u8 {
+        let rand: u8 = *env::random_seed().get(0).unwrap();
+        rand
+    }
 }
 
 /*
- * The rest of this file holds the inline tests for the code above
- * Learn more about Rust tests: https://doc.rust-lang.org/book/ch11-01-writing-tests.html
- *
- * To run from contract directory:
- * cargo test -- --nocapture
- *
- * From project root, to run in combination with frontend tests:
+ *todo: inline tests
  * yarn test
  *
  */

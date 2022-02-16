@@ -14,10 +14,16 @@
             <span class="visually-hidden">(current)</span>
           </a>
         </li>
-        <!--li class="nav-item">
-          <a class="nav-link" href="#">Features</a>
+        <li class="nav-item" v-show="!isHasLocker && isSignedIn">
+          <a class="nav-link" href v-on:click.prevent="initLocker">HODL & Start</a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item " v-show="isHasLocker">
+          <a class="nav-link disabled" href >Withdraw (365 days to unlock)</a>
+        </li>
+        <li class="nav-item" v-show="isHasLocker">
+          <a class="nav-link" href v-on:click.prevent="retrieveRandom">Random</a>
+        </li>
+        <!--li class="nav-item">
           <a class="nav-link" href="#">Pricing</a>
         </li>
         <li class="nav-item">
@@ -35,6 +41,7 @@
         </li -->
       </ul>
       <span class="d-flex">
+        <button class="btn btn-secondary btn-sm disabled" style="margin-right:1rem;">{{ accountId }} {{ accountBalance.available.trimEnd(16) }} NEAR</button>
         <button class="btn btn-outline-light btn-sm" v-show="!isSignedIn" v-on:click="login">Sign In</button>
         <button class="btn btn-outline-light btn-sm" v-show="isSignedIn" v-on:click="logout">Sign Out</button>
       </span>
@@ -57,37 +64,37 @@
         <div class="accordion" id="accordionExample">
   <div class="accordion-item">
     <h2 class="accordion-header" id="headingOne">
-      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-        Accordion Item #1
+      <button class="accordion-button btn-success" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+        Step #1 (current)
       </button>
     </h2>
     <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-      <div class="accordion-body">
-        <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+      <div class="accordion-body bg-success">
+          Idea to MVP step. Create a working testnet prototype.
       </div>
     </div>
   </div>
   <div class="accordion-item">
     <h2 class="accordion-header" id="headingTwo">
-      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-        Accordion Item #2
+      <button class="accordion-button btn-info collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+        Step #2
       </button>
     </h2>
     <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
-      <div class="accordion-body">
-        <strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+      <div class="accordion-body bg-info">
+        Test app and in-game economy model.
       </div>
     </div>
   </div>
   <div class="accordion-item">
     <h2 class="accordion-header" id="headingThree">
-      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-        Accordion Item #3
+      <button class="accordion-button btn-info collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+        Step #3
       </button>
     </h2>
     <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
-      <div class="accordion-body">
-        <strong>This is the third item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+      <div class="accordion-body bg-info">
+        Deploy FISHA to mainnet. Start)
       </div>
     </div>
   </div>
@@ -105,6 +112,7 @@ import "./global.css"
 import "./assets/bootstrap/js/bootstrap.min.js"
 import getConfig from "./config"
 import { login, logout } from "./utils"
+import { utils } from 'near-api-js'
 import SignedOut from "./components/SignedOut.vue"
 import SignedIn from "./components/SignedIn.vue"
 
@@ -116,8 +124,23 @@ console.log(
 window.networkId = nearConfig.networkId
 
 export default {
+  data: function () {
+    return {
+      isHasLocker: false,
+      accountBalance: {
+          "total": "0",
+          "stateStaked": "0",
+          "staked": "0",
+          "available": "0"
+      },
+    }
+  },
   created() {
     document.title = "fisha.co.in :: testnet"
+    if (this.isSignedIn) {
+      this.hasLocker()
+      this.getAccountBalance()
+    }
   },
   name: "App",
   components: {
@@ -129,10 +152,48 @@ export default {
     isSignedIn() {
       return window.walletConnection.isSignedIn()
     },
+    accountId() {
+      return window.accountId
+    },
   },
   methods: {
     login: login,
     logout: logout,
+    initLocker() {
+      window.contract
+        .init_locker({}, "300000000000000", "1000000000000000000000000")
+        .then(() => {
+          console.log("start init_locker");
+        })
+    },
+    hasLocker() {
+      window.contract
+        .has_locker({ account_id: window.accountId })
+        .then((result) => {
+          this.isHasLocker = result
+          console.log("has locker = ", result);
+        })
+    },
+    getAccountBalance () {
+      let self = this;
+        window.walletConnection.account().getAccountBalance()
+      .then(function(result){
+        console.log(result)
+        self.accountBalance = result;
+        self.accountBalance.total = utils.format.formatNearAmount(self.accountBalance.total);
+        self.accountBalance.stateStaked = utils.format.formatNearAmount(self.accountBalance.stateStaked);
+        self.accountBalance.staked = utils.format.formatNearAmount(self.accountBalance.staked);
+        self.accountBalance.available = utils.format.formatNearAmount(self.accountBalance.available, 8);
+      })
+    },
+    retrieveRandom() {
+      //retrieve random 
+      window.contract
+        .get_random()
+        .then((random) => {
+          alert(random);
+        })
+    },
   },
 }
 </script>
