@@ -5,47 +5,29 @@
         <ul class="list-group">
           <li class="list-group-item d-flex justify-content-between align-items-center">
             Nemo
-            <span class="badge bg-primary rounded-pill">1</span>
+            <span class="badge bg-primary rounded-pill">{{ nemo }}</span>
           </li>
           <li class="list-group-item d-flex justify-content-between align-items-center">
-            Goldie
-            <span class="badge bg-primary rounded-pill">0</span>
+            Dori
+            <span class="badge bg-primary rounded-pill">{{ dori }}</span>
           </li>
           <li class="list-group-item d-flex justify-content-between align-items-center">
-            Bubbles
-            <span class="badge bg-primary rounded-pill">0</span>
+            Captain
+            <span class="badge bg-primary rounded-pill">{{ captain }}</span>
           </li>
           <li class="list-group-item d-flex justify-content-between align-items-center">
-            Dory
-            <span class="badge bg-primary rounded-pill">0</span>
+            Ariel
+            <span class="badge bg-primary rounded-pill">{{ ariel }}</span>
           </li>
         </ul>
       </div>
       <div class="col">
         <div class="card text-white bg-secondary mb-3" style="max-width: 20rem;">
-          <div class="card-header">Caviar</div>
+          <div class="card-header">Caviar: {{ caviar }}</div>
           <div class="card-body">
             <div>
-      <h1>
-        <label
-          for="greeting"
-          style="color: var(--secondary);border-bottom: 2px solid var(--secondary);"
-        >{{ savedGreeting }}</label>
-        {{ accountId }}
-      </h1>
-      <form v-on:submit.prevent="saveGreeting">
-        <fieldset ref="fieldset">
-          <label
-            for="greeting"
-            style="display:block; color:var(--gray);margin-bottom:0.5em;"
-          >Change greeting</label>
-          <div style="display:flex">
-            <input v-model="newGreeting" autocomplete="off" id="greeting" style="flex:1" />
-            <button id="save" style="border-radius:0 5px 5px 0">Save</button>
-          </div>
-        </fieldset>
-      </form>
-      <p>Look at that! A Hello World app! This greeting is stored on the NEAR blockchain. Check it out:</p>
+
+      <p>Look at that! A Hello World app! This greeting is stored on the NEAR blockchain.</p>
       <hr />
       <p>
         If you have questions or issues - feel free to contact as by email: support@fisha.co.in
@@ -97,7 +79,7 @@ export default {
 
   beforeMount() {
     if (this.isSignedIn) {
-      this.retrieveSavedGreeting()
+      this.updateState()
     }
   },
 
@@ -110,6 +92,11 @@ export default {
       savedGreeting: "",
       newGreeting: "",
       notificationVisible: false,
+      caviar: 0,
+      nemo: 0,
+      dori: 0,
+      captain: 0,
+      ariel: 0,
     }
   },
 
@@ -133,6 +120,16 @@ export default {
   },
 
   methods: {
+    updateState() {
+      window.contract.get_caviar({ account_id: window.accountId })
+        .then((caviar) => {
+          this.caviar = caviar
+        })
+    window.contract.get_nemo({ account_id: window.accountId })
+        .then((nemo) => {
+          this.nemo = nemo
+        })
+    },
     retrieveSavedGreeting() {
       //retrieve greeting
       window.contract

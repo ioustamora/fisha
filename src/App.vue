@@ -41,7 +41,7 @@
         </li -->
       </ul>
       <span class="d-flex">
-        <button class="btn btn-secondary btn-sm disabled" style="margin-right:1rem;">{{ accountId }} {{ accountBalance.available.trimEnd(16) }} NEAR</button>
+        <button class="btn btn-secondary btn-sm disabled" style="margin-right:1rem;" v-show="isSignedIn">{{ accountId }} {{ accountBalance.available.trimEnd(16) }} NEAR</button>
         <button class="btn btn-outline-light btn-sm" v-show="!isSignedIn" v-on:click="login">Sign In</button>
         <button class="btn btn-outline-light btn-sm" v-show="isSignedIn" v-on:click="logout">Sign Out</button>
       </span>
