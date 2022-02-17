@@ -1,41 +1,37 @@
-/*
- * This is an example of a Rust smart contract with two simple, symmetric functions:
- *
- * 1. set_greeting: accepts a greeting, such as "howdy", and records it for the user (account_id)
- *    who sent the request
- * 2. get_greeting: accepts an account_id and returns the greeting saved for it, defaulting to
- *    "Hello"
- *
- *
- */
-
-// To conserve gas, efficient serialization is achieved through Borsh (http://borsh.io/)
 use near_sdk::borsh::{self, BorshDeserialize, BorshSerialize};
 use near_sdk::{env, near_bindgen, setup_alloc, AccountId, Timestamp, Promise};
 use near_sdk::collections::LookupMap;
 
 setup_alloc!();
 
-// Structs in Rust are similar to other languages, and may include impl keyword as shown below
-// Note: the names of the structs are not important when calling the smart contract, but the function names are
 #[near_bindgen]
 #[derive(BorshDeserialize, BorshSerialize)]
-pub struct Welcome {
+pub struct Contract {
     records: LookupMap<String, String>,
     lockers: LookupMap<AccountId, Timestamp>,
+    caviar: LookupMap<AccountId, u128>,
+    nemo: LookupMap<AccountId, u16>,
+    dori: LookupMap<AccountId, u16>,
+    captain: LookupMap<AccountId, u16>,
+    ariel: LookupMap<AccountId, u16>,
 }
 
-impl Default for Welcome {
+impl Default for Contract {
   fn default() -> Self {
     Self {
       records: LookupMap::new(b"a".to_vec()),
       lockers: LookupMap::new(b"lockers".to_vec()),
+      caviar: LookupMap::new(b"caviar".to_vec()),
+      nemo: LookupMap::new(b"nemo".to_vec()),
+      dori: LookupMap::new(b"dori".to_vec()),
+      captain: LookupMap::new(b"captain".to_vec()),
+      ariel: LookupMap::new(b"ariel".to_vec()),
     }
   }
 }
 
 #[near_bindgen]
-impl Welcome {
+impl Contract {
     ///lock 1 near in contract  to start game
     #[payable]
     pub fn init_locker(&mut self) {
@@ -45,11 +41,15 @@ impl Welcome {
 
         if env::attached_deposit() == amount {
             self.lockers.insert(&account_id, &timestamp);
+            self.get_start_pack(account_id);
         } else {
             env::panic(b"wrong deposit amount or insufficient funds");
         }
+    }
 
-        
+    pub fn get_start_pack(&mut self, account_id: AccountId) {
+        self.caviar.insert(&account_id, &365);
+        self.nemo.insert(&account_id, &1);
     }
 
     ///current user has locker and can play
@@ -86,9 +86,6 @@ impl Welcome {
         self.records.insert(&account_id, &message);
     }
 
-    // `match` is similar to `switch` in other languages; here we use it to default to "Hello" if
-    // self.records.get(&account_id) is not yet defined.
-    // Learn more: https://doc.rust-lang.org/book/ch06-02-match.html#matching-with-optiont
     pub fn get_greeting(&self, account_id: String) -> String {
         match self.records.get(&account_id) {
             Some(greeting) => greeting,
@@ -96,9 +93,93 @@ impl Welcome {
         }
     }
 
-    pub fn get_random(&self) -> u8 {
-        let rand: u8 = *env::random_seed().get(0).unwrap();
-        rand
+    pub fn get_caviar(&self, account_id: AccountId) -> u128 {
+        match self.caviar.get(&account_id) {
+            Some(caviar) => caviar,
+            None => 0,
+        }
+    }
+
+    pub fn set_caviar(&mut self, account_id: AccountId, new_caviar: u128) {
+        self.caviar.remove(&account_id);
+        self.caviar.insert(&account_id, &new_caviar);
+    }
+
+    pub fn get_nemo(&self, account_id: AccountId) -> u16 {
+        match self.nemo.get(&account_id) {
+            Some(nemo) => nemo,
+            None => 0,
+        }
+    }
+
+    pub fn set_nemo(&mut self, account_id: AccountId, new_nemo: u16) {
+        self.nemo.remove(&account_id);
+        self.nemo.insert(&account_id, &new_nemo);
+    }
+
+    pub fn get_dori(&self, account_id: AccountId) -> u16 {
+        match self.dori.get(&account_id) {
+            Some(dori) => dori,
+            None => 0,
+        }
+    }
+
+    pub fn set_dori(&mut self, account_id: AccountId, new_dori: u16) {
+        self.dori.remove(&account_id);
+        self.dori.insert(&account_id, &new_dori);
+    }
+
+    pub fn get_captain(&self, account_id: AccountId) -> u16 {
+        match self.captain.get(&account_id) {
+            Some(captain) => captain,
+            None => 0,
+        }
+    }
+
+    pub fn set_captain(&mut self, account_id: AccountId, new_captain: u16) {
+        self.captain.remove(&account_id);
+        self.captain.insert(&account_id, &new_captain);
+    }
+
+    pub fn get_ariel(&self, account_id: AccountId) -> u16 {
+        match self.ariel.get(&account_id) {
+            Some(ariel) => ariel,
+            None => 0,
+        }
+    }
+
+    pub fn set_ariel(&mut self, account_id: AccountId, new_ariel: u16) {
+        self.ariel.remove(&account_id);
+        self.ariel.insert(&account_id, &new_ariel);
+    }
+
+    pub fn get_random(&mut self, account_id: AccountId) -> String {   
+        let caviar = self.get_caviar(account_id.clone());
+
+        if caviar > 0 {
+            let rand: u8 = *env::random_seed().get(0).unwrap();
+            let new_caviar = caviar - 1;
+            self.set_caviar(account_id.clone(), new_caviar);
+            if rand < 50 {
+                self.set_caviar(account_id, caviar + 10);
+                return "You win 10 caviar".to_owned();
+            } else if rand < 100 {
+                return "You loose... good luck next time!".to_owned();
+            } else if rand < 150 {
+                self.set_caviar(account_id, caviar + 20);
+                return "You win 20 caviar".to_owned();
+            } else if rand < 200 {
+                self.set_caviar(account_id, caviar + 30);
+                return "You win 30 caviar".to_owned();
+            } else {
+                self.set_caviar(account_id, caviar + 50);
+                return "You win 50 caviar".to_owned();
+            }
+        }
+
+        
+        
+        "No caviar - no lottery!".to_owned()
     }
 }
 
@@ -139,7 +220,7 @@ mod tests {
     fn set_then_get_greeting() {
         let context = get_context(vec![], false);
         testing_env!(context);
-        let mut contract = Welcome::default();
+        let mut contract = Contract::default();
         contract.set_greeting("howdy".to_string());
         assert_eq!(
             "howdy".to_string(),
@@ -151,7 +232,7 @@ mod tests {
     fn get_default_greeting() {
         let context = get_context(vec![], true);
         testing_env!(context);
-        let contract = Welcome::default();
+        let contract = Contract::default();
         // this test did not call set_greeting so should return the default "Hello" greeting
         assert_eq!(
             "Hello".to_string(),
