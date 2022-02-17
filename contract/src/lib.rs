@@ -7,7 +7,6 @@ setup_alloc!();
 #[near_bindgen]
 #[derive(BorshDeserialize, BorshSerialize)]
 pub struct Contract {
-    records: LookupMap<String, String>,
     lockers: LookupMap<AccountId, Timestamp>,
     caviar: LookupMap<AccountId, u128>,
     nemo: LookupMap<AccountId, u16>,
@@ -19,7 +18,6 @@ pub struct Contract {
 impl Default for Contract {
   fn default() -> Self {
     Self {
-      records: LookupMap::new(b"a".to_vec()),
       lockers: LookupMap::new(b"lockers".to_vec()),
       caviar: LookupMap::new(b"caviar".to_vec()),
       nemo: LookupMap::new(b"nemo".to_vec()),
@@ -74,22 +72,6 @@ impl Contract {
         let account_id = env::signer_account_id();
         if self.can_unlock(account_id.clone()) {
             Promise::new(account_id).transfer(amount);
-        }
-    }
-
-    pub fn set_greeting(&mut self, message: String) {
-        let account_id = env::signer_account_id();
-
-        // Use env::log to record logs permanently to the blockchain!
-       // env::log(format!("Saving greeting '{}' for account '{}'", message, account_id,).as_bytes());
-
-        self.records.insert(&account_id, &message);
-    }
-
-    pub fn get_greeting(&self, account_id: String) -> String {
-        match self.records.get(&account_id) {
-            Some(greeting) => greeting,
-            None => "Hello".to_string(),
         }
     }
 
@@ -216,27 +198,5 @@ mod tests {
         }
     }
 
-    #[test]
-    fn set_then_get_greeting() {
-        let context = get_context(vec![], false);
-        testing_env!(context);
-        let mut contract = Contract::default();
-        contract.set_greeting("howdy".to_string());
-        assert_eq!(
-            "howdy".to_string(),
-            contract.get_greeting("bob_near".to_string())
-        );
-    }
-
-    #[test]
-    fn get_default_greeting() {
-        let context = get_context(vec![], true);
-        testing_env!(context);
-        let contract = Contract::default();
-        // this test did not call set_greeting so should return the default "Hello" greeting
-        assert_eq!(
-            "Hello".to_string(),
-            contract.get_greeting("francis.near".to_string())
-        );
-    }
+  
 }
