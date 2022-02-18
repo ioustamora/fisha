@@ -2,7 +2,17 @@
   <main>
     <div class="row">
       <div class="col">
-        <ul class="list-group">
+        <div class="card text-white bg-secondary mb-3" style="max-width: 20rem;">
+          <div class="card-header">
+            Aquarium 
+            <div class="float-end">
+              <button class="btn btn-outline-success btn-sm" v-on:click="harvest">
+                Harvest
+              </button>
+            </div>
+          </div>
+          <div class="card-body" style="padding:0.5rem;">
+            <ul class="list-group">
           <li class="list-group-item d-flex justify-content-between align-items-center">
             Nemo
             <span class="badge bg-primary rounded-pill">{{ nemo }}</span>
@@ -20,36 +30,74 @@
             <span class="badge bg-primary rounded-pill">{{ ariel }}</span>
           </li>
         </ul>
-      </div>
-      <div class="col">
-        <div class="card text-white bg-secondary mb-3" style="max-width: 20rem;">
-          <div class="card-header">Caviar: {{ caviar }}</div>
-          <div class="card-body">
-            <div>
-
-      <p>Look at that! A Hello World app! This greeting is stored on the NEAR blockchain.</p>
-      <hr />
-      <p>
-        If you have questions or issues - feel free to contact as by email: support@fisha.co.in
-      </p>
-    </div>
           </div>
         </div>
       </div>
       <div class="col">
         <div class="card text-white bg-secondary mb-3" style="max-width: 20rem;">
-          <div class="card-header">Wallet Data</div>
+          <div class="card-header">
+            Vault 
+            <div class="float-end">
+              <button class="btn btn-outline-success btn-sm">
+                Harvest
+              </button>
+            </div>
+          </div>
+          <div class="card-body">
+            <div>
+              <p>Available: {{ caviar }} CAVIAR</p>
+              <hr/>
+              <form>
+                <fieldset>
+                  <div class="form-group">
+                      <div class="input-group input-group-sm mb-3">
+                        <button class="btn btn-info btn-sm" type="button" id="button-addon1">-</button>
+                        <input type="text" class="form-control" placeholder="0" aria-label="0" aria-describedby="button-addon5">
+                        <button class="btn btn-info btn-sm" type="button" id="button-addon2">+</button>
+                        <button class="btn btn-secondary btn-sm" type="button" id="button-addon3">MAX</button>
+                        <button class="btn btn-warning btn-sm" id="button-addon6">Stake</button>
+                      </div>
+                    </div>
+                </fieldset>
+              </form>
+              <p>Staked: 0 CAVIAR </p>
+              <button class="btn btn-outline-primary btn-sm" id="button-addon6">Unstake</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card text-white bg-secondary mb-3" style="max-width: 20rem;">
+          <div class="card-header">Swap Assets</div>
           <div class="card-body">
             <p class="card-text">
-              some data
+              coming soon
             </p>
           </div>
         </div>
         <div class="card text-white bg-secondary mb-3" style="max-width: 20rem;">
-          <div class="card-header">Dev Notes</div>
+          <div class="card-header">Tips</div>
           <div class="card-body">
             <p class="card-text">
-              Some dev notes) Lock 1 near token to start game.
+              Lock 1 near token to start game.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card text-white bg-secondary mb-3" style="max-width: 20rem;">
+          <div class="card-header">Exchange CAVIAR & FISHA</div>
+          <div class="card-body">
+            <p class="card-text">
+              coming soon
+            </p>
+          </div>
+        </div>
+        <div class="card text-white bg-secondary mb-3" style="max-width: 20rem;">
+          <div class="card-header">Stake FISHA</div>
+          <div class="card-body">
+            <p class="card-text">
+              coming soon
             </p>
           </div>
         </div>
@@ -130,13 +178,11 @@ export default {
           this.nemo = nemo
         })
     },
-    retrieveSavedGreeting() {
-      //retrieve greeting
+    harvest() {
       window.contract
-        .get_greeting({ account_id: window.accountId })
-        .then((greetingFromContract) => {
-          this.savedGreeting = greetingFromContract
-          this.newGreeting = greetingFromContract
+        .harvest_fish({ account_id: window.accountId })
+        .then((amount) => {
+          alert("you harvested: " + amount + " caviar")
         })
     },
 

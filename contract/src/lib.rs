@@ -135,8 +135,9 @@ impl Contract {
         self.ariel.insert(&account_id, &new_ariel);
     }
 
-    pub fn get_random(&mut self, account_id: AccountId) -> String {   
+    pub fn get_random(&mut self, account_id: AccountId) -> String {
         let caviar = self.get_caviar(account_id.clone());
+        let nemo = self.get_nemo(account_id.clone());
 
         if caviar > 0 {
             let rand: u8 = *env::random_seed().get(0).unwrap();
@@ -146,6 +147,7 @@ impl Contract {
                 self.set_caviar(account_id, caviar + 10);
                 return "You win 10 caviar".to_owned();
             } else if rand < 100 {
+                self.set_nemo(account_id, nemo + 1);
                 return "You loose... good luck next time!".to_owned();
             } else if rand < 150 {
                 self.set_caviar(account_id, caviar + 20);
@@ -162,6 +164,20 @@ impl Contract {
         
         
         "No caviar - no lottery!".to_owned()
+    }
+
+    pub fn harvest_fish(&mut self, account_id: AccountId) -> u128 {
+        let mut harvest: u128 = 0;
+        let caviar = self.get_caviar(account_id.clone());
+        harvest = harvest 
+            + u128::from(self.get_nemo(account_id.clone()))
+            + (u128::from(self.get_dori(account_id.clone())) * 2)
+            + (u128::from(self.get_captain(account_id.clone())) * 5)
+            + (u128::from(self.get_ariel(account_id.clone())) * 10);
+        if harvest > 0 {
+            self.set_caviar(account_id, caviar + harvest);
+        }
+        harvest
     }
 }
 

@@ -21,7 +21,7 @@
           <a class="nav-link disabled" href >Withdraw (365 days to unlock)</a>
         </li>
         <li class="nav-item" v-show="isHasLocker">
-          <a class="nav-link" href v-on:click.prevent="retrieveRandom">Random</a>
+          <a class="nav-link" href v-on:click.prevent="retrieveRandom">Lottery</a>
         </li>
         <!--li class="nav-item">
           <a class="nav-link" href="#">Pricing</a>
@@ -65,12 +65,65 @@
   <div class="accordion-item">
     <h2 class="accordion-header" id="headingOne">
       <button class="accordion-button btn-success" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-        Step #1 (current)
+        Step #1 (current) Idea to MVP.
       </button>
     </h2>
     <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
       <div class="accordion-body bg-success">
-          Idea to MVP step. Create a working testnet prototype.
+        <form>
+          <fieldset>
+            <fieldset class="form-group">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked="">
+                <label class="form-check-label" for="flexCheckDefault">
+                  hodl & start
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked="">
+                <label class="form-check-label" for="flexCheckChecked">
+                  lottery
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="flexCheck1">
+                <label class="form-check-label" for="flexCheck1">
+                  harvest caviar from assets
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="flexCheck2">
+                <label class="form-check-label" for="flexCheck2">
+                  staking caviar
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="flexCheck3">
+                <label class="form-check-label" for="flexCheck3">
+                  exchange assets
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="flex1">
+                <label class="form-check-label" for="flex1">
+                  FISHA token
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="flex2">
+                <label class="form-check-label" for="flex2">
+                  exchange caviar to FISHA
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="flex1">
+                <label class="form-check-label" for="flex1">
+                  FISHA token staking
+                </label>
+              </div>
+            </fieldset>
+          </fieldset>
+        </form>
       </div>
     </div>
   </div>
@@ -189,7 +242,7 @@ export default {
     retrieveRandom() {
       //retrieve random 
       window.contract
-        .get_random()
+        .get_random({ account_id: window.accountId })
         .then((random) => {
           alert(random);
         })
