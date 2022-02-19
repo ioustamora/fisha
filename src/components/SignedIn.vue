@@ -38,7 +38,7 @@
           <div class="card-header">
             Vault 
             <div class="float-end">
-              <button class="btn btn-outline-success btn-sm">
+              <button class="btn btn-outline-success btn-sm" v-on:click="harvest_stake">
                 Harvest
               </button>
             </div>
@@ -51,17 +51,17 @@
                 <fieldset>
                   <div class="form-group">
                       <div class="input-group input-group-sm mb-3">
-                        <button class="btn btn-info btn-sm" type="button" id="button-addon1">-</button>
-                        <input type="text" class="form-control" placeholder="0" aria-label="0" aria-describedby="button-addon5">
-                        <button class="btn btn-info btn-sm" type="button" id="button-addon2">+</button>
-                        <button class="btn btn-secondary btn-sm" type="button" id="button-addon3">MAX</button>
-                        <button class="btn btn-warning btn-sm" id="button-addon6">Stake</button>
+                        <button class="btn btn-info btn-sm" type="button" id="button-addon1" v-on:click="stakeMinus()">-</button>
+                        <input type="text" class="form-control" placeholder="0" aria-label="0" aria-describedby="button-addon5" v-model="stakeInput.val">
+                        <button class="btn btn-info btn-sm" type="button" id="button-addon2" v-on:click="stakePlus()">+</button>
+                        <button class="btn btn-secondary btn-sm" type="button" id="button-addon3" v-on:click="stakeMax()">MAX</button>
+                        <button class="btn btn-warning btn-sm" id="button-addon6" v-on:click.prevent="stakeCaviar()">Stake</button>
                       </div>
                     </div>
                 </fieldset>
               </form>
-              <p>Staked: 0 CAVIAR </p>
-              <button class="btn btn-outline-primary btn-sm" id="button-addon6">Unstake</button>
+              <p>Staked: {{ caviarVault }} CAVIAR </p>
+              <button class="btn btn-outline-primary btn-sm" id="button-addon6" v-show="caviarVault >= 100" v-on:click="unstakeCaviar()">Unstake</button>
             </div>
           </div>
         </div>
@@ -69,18 +69,21 @@
       <div class="col">
         <div class="card text-white bg-secondary mb-3" style="max-width: 20rem;">
           <div class="card-header">Swap Assets</div>
-          <div class="card-body">
-            <p class="card-text">
-              coming soon
-            </p>
-          </div>
-        </div>
-        <div class="card text-white bg-secondary mb-3" style="max-width: 20rem;">
-          <div class="card-header">Tips</div>
-          <div class="card-body">
-            <p class="card-text">
-              Lock 1 near token to start game.
-            </p>
+          <div class="card-body" style="padding:0.5rem;">
+            <ul class="list-group">
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                10 Nemo -> 1 Dori
+                <button class="btn btn-success btn-sm disabled" id="button11">swap</button>
+              </li>
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                10 Dori -> 1 Captain
+                <button class="btn btn-success btn-sm disabled" id="button12">swap</button>
+              </li>
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                10 Captain -> 1 Ariel
+                <button class="btn btn-success btn-sm disabled" id="button13">swap</button>
+              </li>
+            </ul>
           </div>
         </div>
       </div>
@@ -141,10 +144,14 @@ export default {
       newGreeting: "",
       notificationVisible: false,
       caviar: 0,
+      caviarVault: 0,
       nemo: 0,
       dori: 0,
       captain: 0,
       ariel: 0,
+      stakeInput: {
+        val: 0,
+      },
     }
   },
 
@@ -177,13 +184,55 @@ export default {
         .then((nemo) => {
           this.nemo = nemo
         })
+    window.contract.get_caviar_vault({ account_id: window.accountId })
+        .then((vault) => {
+          this.caviarVault = vault
+        })
     },
     harvest() {
       window.contract
         .harvest_fish({ account_id: window.accountId })
         .then((amount) => {
+          this.updateState()
           alert("you harvested: " + amount + " caviar")
         })
+    },
+    harvest_stake() {
+      window.contract
+        .harvest_stake({ account_id: window.accountId })
+        .then((amount) => {
+          this.updateState()
+          alert("you harvested: " + amount + " caviar")
+        })
+    },
+    stakeCaviar() {
+      window.contract
+        .stake_caviar({ account_id: window.accountId, amount: parseInt(this.stakeInput.val) })
+        .then((amount) => {
+          this.updateState()
+          alert("you staked: " + amount + " caviar")
+        })
+    },
+    unstakeCaviar() {
+      window.contract
+        .unstake_caviar({ account_id: window.accountId })
+        .then((amount) => {
+          this.updateState()
+          alert("you unstaked: " + amount + " caviar")
+        })
+    },
+    stakePlus() {
+      if (this.caviar > this.stakeInput.val) {
+        this.stakeInput.val += 1
+      }
+    },
+    stakeMinus() {
+      if (this.stakeInput.val > 1) {
+        this.stakeInput.val -= 1
+      }
+    },
+    stakeMax() {
+      this.stakeInput.val = this.caviar
     },
 
     saveGreeting: async function (event) {

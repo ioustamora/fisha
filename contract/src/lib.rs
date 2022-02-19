@@ -9,6 +9,7 @@ setup_alloc!();
 pub struct Contract {
     lockers: LookupMap<AccountId, Timestamp>,
     caviar: LookupMap<AccountId, u128>,
+    caviar_vault: LookupMap<AccountId, u128>,
     nemo: LookupMap<AccountId, u16>,
     dori: LookupMap<AccountId, u16>,
     captain: LookupMap<AccountId, u16>,
@@ -20,6 +21,7 @@ impl Default for Contract {
     Self {
       lockers: LookupMap::new(b"lockers".to_vec()),
       caviar: LookupMap::new(b"caviar".to_vec()),
+      caviar_vault: LookupMap::new(b"vault".to_vec()),
       nemo: LookupMap::new(b"nemo".to_vec()),
       dori: LookupMap::new(b"dori".to_vec()),
       captain: LookupMap::new(b"captain".to_vec()),
@@ -141,23 +143,26 @@ impl Contract {
 
         if caviar > 0 {
             let rand: u8 = *env::random_seed().get(0).unwrap();
-            let new_caviar = caviar - 1;
+            let new_caviar = caviar - 2;
             self.set_caviar(account_id.clone(), new_caviar);
-            if rand < 50 {
+            if rand == 29 || rand == 1 || rand == 19 || rand == 5 || rand == 21 || rand == 20 {
+                self.set_nemo(account_id, nemo + 10);
+                return "You win 10 nemo... lucky you!".to_owned();
+            } else if rand < 50 {
                 self.set_caviar(account_id, caviar + 10);
-                return "You win 10 caviar".to_owned();
+                return "You win 10 caviar!".to_owned();
             } else if rand < 100 {
                 self.set_nemo(account_id, nemo + 1);
-                return "You loose... good luck next time!".to_owned();
+                return "You win 1 nemo!".to_owned();
             } else if rand < 150 {
                 self.set_caviar(account_id, caviar + 20);
-                return "You win 20 caviar".to_owned();
+                return "You win 20 caviar!".to_owned();
             } else if rand < 200 {
                 self.set_caviar(account_id, caviar + 30);
-                return "You win 30 caviar".to_owned();
+                return "You win 30 caviar!".to_owned();
             } else {
                 self.set_caviar(account_id, caviar + 50);
-                return "You win 50 caviar".to_owned();
+                return "You win 50 caviar!".to_owned();
             }
         }
 
@@ -179,6 +184,58 @@ impl Contract {
         }
         harvest
     }
+
+    pub fn get_caviar_vault(&self, account_id: AccountId) -> u128 {
+        match self.caviar_vault.get(&account_id) {
+            Some(caviar) => caviar,
+            None => 0,
+        }
+    }
+
+    pub fn set_caviar_vault(&mut self, account_id: AccountId, new_caviar: u128) {
+        self.caviar_vault.remove(&account_id);
+        self.caviar_vault.insert(&account_id, &new_caviar);
+    }
+
+    pub fn stake_caviar(&mut self, account_id: AccountId, amount: u128) -> u128 {
+        let mut staked: u128 = 0;
+        let caviar = self.get_caviar(account_id.clone());
+        if amount > 0 && amount <= caviar {
+            self.set_caviar_vault(account_id.clone(), amount);
+            self.set_caviar(account_id.clone(), caviar - amount);
+            staked = amount;
+        }
+        staked
+    }
+
+    ///unstake all staked caviar from vault to account
+    pub fn unstake_caviar(&mut self, account_id: AccountId) -> u128 {
+        let mut unstaked: u128 = 0;
+        let vault = self.get_caviar_vault(account_id.clone());
+        if vault > 0 {
+            let caviar = self.get_caviar(account_id.clone());
+            self.set_caviar_vault(account_id.clone(), 0);
+            self.set_caviar(account_id, caviar + vault);
+            unstaked = vault;
+        }
+        unstaked
+    }
+
+    //100 staked = 1 harvested
+    pub fn harvest_stake (&mut self, account_id: AccountId) -> u128 {
+        let mut harvested: u128 = 0;
+        let vault = self.get_caviar_vault(account_id.clone());
+        let times = vault / 100;
+        if times > 0 {
+            let caviar = self.get_caviar(account_id.clone());
+            self.set_caviar(account_id, caviar + times);
+            harvested = times;
+        }
+
+        harvested
+    }
+
+
 }
 
 /*

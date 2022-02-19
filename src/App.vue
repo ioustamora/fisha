@@ -86,13 +86,13 @@
                 </label>
               </div>
               <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="flexCheck1">
+                <input class="form-check-input" type="checkbox" value="" id="flexCheck1" checked="">
                 <label class="form-check-label" for="flexCheck1">
                   harvest caviar from assets
                 </label>
               </div>
               <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="flexCheck2">
+                <input class="form-check-input" type="checkbox" value="" id="flexCheck2" checked="">
                 <label class="form-check-label" for="flexCheck2">
                   staking caviar
                 </label>
