@@ -90,17 +90,28 @@
       <div class="col">
         <div class="card text-white bg-secondary mb-3" style="max-width: 20rem;">
           <div class="card-header">Exchange CAVIAR & FISHA</div>
-          <div class="card-body">
-            <p class="card-text">
-              coming soon
-            </p>
+          <div class="card-body" style="padding:0.5rem;">
+            <ul class="list-group">
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                CAVIAR -> FISHA
+                <button class="btn btn-info btn-sm disabled" id="button11">ex</button>
+              </li>
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                FISHA -> CAVIAR
+                <button class="btn btn-info btn-sm disabled" id="button12">ex</button>
+              </li>
+            </ul>
           </div>
         </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
         <div class="card text-white bg-secondary mb-3" style="max-width: 20rem;">
           <div class="card-header">Stake FISHA</div>
           <div class="card-body">
             <p class="card-text">
-              coming soon
+              external link coming soon
             </p>
           </div>
         </div>

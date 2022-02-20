@@ -234,8 +234,60 @@ impl Contract {
 
         harvested
     }
-
-
+    /// swap 500 caviar to 1 nemo
+    pub fn swap_caviar_to_nemo(&mut self, account_id: AccountId) -> u16 {
+        let mut swapped: u16 = 0;
+        let nemo: u16 = self.get_nemo(account_id.clone());
+        let caviar: u128 = self.get_caviar(account_id.clone());
+        if caviar >= 500 {
+            self.set_nemo(account_id.clone(), nemo + 1);
+            self.set_caviar(account_id, caviar - 500);
+            swapped = 1;
+        }
+        swapped
+    }
+    /// swap 10 nemo to 1 dori
+    pub fn swap_nemo_to_dori(&mut self, account_id: AccountId) -> u16 {
+        let mut swapped: u16 = 0;
+        let nemo: u16 = self.get_nemo(account_id.clone());
+        let dori: u16 = self.get_dori(account_id.clone());
+        let caviar: u128 = self.get_caviar(account_id.clone());
+        if nemo >= 10 && caviar >= 100 {
+            self.set_nemo(account_id.clone(), nemo - 10);
+            self.set_dori(account_id.clone(), dori + 1);
+            self.set_caviar(account_id, caviar - 100);
+            swapped = 1;
+        }
+        swapped
+    }
+    /// swap 10 dori to 1 captain
+    pub fn swap_dori_to_captain(&mut self, account_id: AccountId) -> u16 {
+        let mut swapped: u16 = 0;
+        let dori: u16 = self.get_dori(account_id.clone());
+        let captain: u16 = self.get_captain(account_id.clone());
+        let caviar: u128 = self.get_caviar(account_id.clone());
+        if dori >= 10 && caviar >= 100 {
+            self.set_dori(account_id.clone(), dori - 10);
+            self.set_captain(account_id.clone(), captain + 1);
+            self.set_caviar(account_id, caviar - 100);
+            swapped = 1;
+        }
+        swapped
+    }
+    /// swap 10 captain to 1 ariel
+    pub fn swap_captain_to_ariel(&mut self, account_id: AccountId) -> u16 {
+        let mut swapped: u16 = 0;
+        let captain: u16 = self.get_captain(account_id.clone());
+        let ariel: u16 = self.get_ariel(account_id.clone());
+        let caviar: u128 = self.get_caviar(account_id.clone());
+        if captain >= 10 && caviar >= 100 {
+            self.set_captain(account_id.clone(), captain - 10);
+            self.set_ariel(account_id.clone(), ariel + 1);
+            self.set_caviar(account_id, caviar - 100);
+            swapped = 1;
+        }
+        swapped
+    }
 }
 
 /*
