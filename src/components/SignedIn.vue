@@ -30,6 +30,7 @@
             <span class="badge bg-primary rounded-pill">{{ ariel }}</span>
           </li>
         </ul>
+        <small id="emailHelp" class="form-text text-muted">* helper comment</small>
           </div>
         </div>
       </div>
@@ -72,18 +73,23 @@
           <div class="card-body" style="padding:0.5rem;">
             <ul class="list-group">
               <li class="list-group-item d-flex justify-content-between align-items-center">
+                400 Caviar -> 1 Nemo
+                <button class="btn btn-success btn-sm " id="button11" v-on:click="swapCaviarToNemo">swap</button>
+              </li>
+              <li class="list-group-item d-flex justify-content-between align-items-center">
                 10 Nemo -> 1 Dori
-                <button class="btn btn-success btn-sm disabled" id="button11">swap</button>
+                <button class="btn btn-success btn-sm " id="button12" v-on:click="swapNemoToDori">swap</button>
               </li>
               <li class="list-group-item d-flex justify-content-between align-items-center">
                 10 Dori -> 1 Captain
-                <button class="btn btn-success btn-sm disabled" id="button12">swap</button>
+                <button class="btn btn-success btn-sm " id="button12" v-on:click="swapDoriToCaptain">swap</button>
               </li>
               <li class="list-group-item d-flex justify-content-between align-items-center">
                 10 Captain -> 1 Ariel
-                <button class="btn btn-success btn-sm disabled" id="button13">swap</button>
+                <button class="btn btn-success btn-sm " id="button13" v-on:click="swapCaptainToAriel">swap</button>
               </li>
             </ul>
+            <small id="emailHelp" class="form-text text-muted">* any swap takes 100 caviar fee</small>
           </div>
         </div>
       </div>
@@ -195,9 +201,53 @@ export default {
         .then((nemo) => {
           this.nemo = nemo
         })
+    window.contract.get_dori({ account_id: window.accountId })
+        .then((dori) => {
+          this.dori = dori
+        })
+    window.contract.get_captain({ account_id: window.accountId })
+        .then((captain) => {
+          this.captain = captain
+        })
+    window.contract.get_ariel({ account_id: window.accountId })
+        .then((ariel) => {
+          this.ariel = ariel
+        })
     window.contract.get_caviar_vault({ account_id: window.accountId })
         .then((vault) => {
           this.caviarVault = vault
+        })
+    },
+    swapCaviarToNemo(){
+      window.contract
+        .swap_caviar_to_nemo({ account_id: window.accountId })
+        .then((amount) => {
+          this.updateState()
+          alert("you got: " + amount + " nemo")
+        })
+    },
+    swapNemoToDori(){
+      window.contract
+        .swap_nemo_to_dori({ account_id: window.accountId })
+        .then((amount) => {
+          this.updateState()
+          alert("you got: " + amount + " dori")
+        })
+    },
+    swapDoriToCaptain(){
+      window.contract
+        .swap_dori_to_captain({ account_id: window.accountId })
+        .then((amount) => {
+          this.updateState()
+          alert("you got: " + amount + " captain")
+        })
+    },
+    swapCaptainToAriel(){
+      window.contract
+        .swap_captain_to_ariel({ account_id: window.accountId })
+        .then((amount) => {
+          this.updateState()
+          alert("you got: " + amount + " ariel")
         })
     },
     harvest() {

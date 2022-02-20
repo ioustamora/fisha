@@ -50,7 +50,7 @@
 </nav>
   <div class="container">
     <SignedOut v-show="!isSignedIn" />
-    <SignedIn v-show="isSignedIn" />
+    <SignedIn ref="foo" v-show="isSignedIn" />
   </div>
   <!-- Modal -->
 <div class="modal fade" id="roadmap" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -244,7 +244,8 @@ export default {
       window.contract
         .get_random({ account_id: window.accountId })
         .then((random) => {
-          alert(random);
+          this.$children[1].updateState()
+          alert(random)
         })
     },
   },
