@@ -98,15 +98,27 @@
                 </label>
               </div>
               <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="flexCheck3">
+                <input class="form-check-input" type="checkbox" value="" id="flexCheck3" checked="">
                 <label class="form-check-label" for="flexCheck3">
-                  exchange assets
+                  swap/exchange assets
                 </label>
               </div>
               <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="flex1">
+                <input class="form-check-input" type="checkbox" value="" id="flex1" checked="">
                 <label class="form-check-label" for="flex1">
                   FISHA token
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="flex10">
+                <label class="form-check-label" for="flex1">
+                  test FISHA token on testnet
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="flex11">
+                <label class="form-check-label" for="flex1">
+                  deploy FISHA token on testnet
                 </label>
               </div>
               <div class="form-check">
