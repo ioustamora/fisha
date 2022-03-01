@@ -10,18 +10,28 @@
     <div class="collapse navbar-collapse" id="navbarColor03">
       <ul class="navbar-nav me-auto">
         <li class="nav-item" v-show="!isSignedIn">
-          <a class="nav-link active" href="#" data-bs-toggle="modal" data-bs-target="#roadmap">Roadmap
+          <a class="nav-link active" href="#" data-bs-toggle="modal" data-bs-target="#roadmap">
+            <font-awesome-icon icon="fa-solid fa-road" />
+            Roadmap
             <span class="visually-hidden">(current)</span>
           </a>
         </li>
         <li class="nav-item" v-show="!isHasLocker && isSignedIn">
-          <a class="nav-link" href v-on:click.prevent="initLocker">HODL & Start</a>
+          <a class="nav-link" href v-on:click.prevent="initLocker">
+            <font-awesome-icon icon="fa-solid fa-circle-play" />
+            HODL & Start</a>
         </li>
         <li class="nav-item " v-show="isHasLocker">
-          <a class="nav-link disabled" href >Withdraw (365 days to unlock)</a>
+          <a class="nav-link disabled" href >
+            <font-awesome-icon icon="fa-solid fa-money-bill-1" />
+            Withdraw (365 days to unlock)
+          </a>
         </li>
         <li class="nav-item" v-show="isHasLocker">
-          <a class="nav-link" href v-on:click.prevent="retrieveRandom">Lottery</a>
+          <a class="nav-link" href v-on:click.prevent="retrieveRandom">
+            <font-awesome-icon icon="fa-solid fa-face-grin-stars" />
+            Lottery
+          </a>
         </li>
         <!--li class="nav-item">
           <a class="nav-link" href="#">Pricing</a>
@@ -41,7 +51,13 @@
         </li -->
       </ul>
       <span class="d-flex">
-        <button class="btn btn-secondary btn-sm disabled" style="margin-right:1rem;" v-show="isSignedIn">{{ accountId }} {{ accountBalance.available.trimEnd(16) }} NEAR</button>
+        <a class="btn btn-primary btn-sm" style="margin-right:1rem;" href="https://github.com/ioustamora/fisha" v-show="!isSignedIn">
+          <font-awesome-icon icon="fa-brands fa-github-alt" />
+        </a>
+        <button class="btn btn-secondary btn-sm disabled" style="margin-right:1rem;" v-show="isSignedIn">
+          <font-awesome-icon icon="fa-solid fa-user-secret" />
+          {{ accountId }} {{ accountBalance.available.trimEnd(16) }} NEAR
+        </button>
         <button class="btn btn-outline-light btn-sm" v-show="!isSignedIn" v-on:click="login">Sign In</button>
         <button class="btn btn-outline-light btn-sm" v-show="isSignedIn" v-on:click="logout">Sign Out</button>
       </span>

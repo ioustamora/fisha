@@ -176,7 +176,7 @@ impl Contract {
         let caviar = self.get_caviar(account_id.clone());
         harvest = harvest 
             + u128::from(self.get_nemo(account_id.clone()))
-            + (u128::from(self.get_dori(account_id.clone())) * 12)
+            + (u128::from(self.get_dori(account_id.clone())) * 15)
             + (u128::from(self.get_captain(account_id.clone())) * 150)
             + (u128::from(self.get_ariel(account_id.clone())) * 2000);
         if harvest > 0 {
