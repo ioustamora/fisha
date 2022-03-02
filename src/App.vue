@@ -28,7 +28,7 @@
           </a>
         </li>
         <li class="nav-item" v-show="isHasLocker">
-          <a class="nav-link" href v-on:click.prevent="retrieveRandom">
+          <a class="nav-link" v-bind:class="{ disabled: lotteryDisabled }" href v-on:click.prevent="retrieveRandom">
             <font-awesome-icon icon="fa-solid fa-face-grin-stars" />
             Lottery
           </a>
@@ -63,8 +63,13 @@
       </span>
     </div>
   </div>
-</nav>
+    </nav>
   <div class="container">
+    <div class="col" v-show="noyifyVisible">
+      <div class="alert alert-warning">
+        <p class="mb-0">{{ alertText }}</p>
+      </div>
+    </div>
     <SignedOut v-show="!isSignedIn" />
     <SignedIn ref="foo" v-show="isSignedIn" />
   </div>
@@ -184,6 +189,8 @@
     </div>
   </div>
 </div>
+
+
   </div>
 </template>
 
@@ -207,6 +214,9 @@ window.networkId = nearConfig.networkId
 export default {
   data: function () {
     return {
+      lotteryDisabled: false,
+      alertText: "alert...",
+      noyifyVisible: false,
       isHasLocker: false,
       accountBalance: {
           "total": "0",
@@ -236,10 +246,22 @@ export default {
     accountId() {
       return window.accountId
     },
+    getGas() {
+      //return window.contract.
+    },
   },
   methods: {
     login: login,
     logout: logout,
+    noyify(alertText) {
+      this.noyifyVisible = false
+      this.alertText = alertText
+      this.noyifyVisible = true
+
+      setTimeout(() => {
+        this.noyifyVisible = false
+      }, 11000)
+    },
     initLocker() {
       window.contract
         .init_locker({}, "300000000000000", "1000000000000000000000000")
@@ -268,12 +290,15 @@ export default {
       })
     },
     retrieveRandom() {
+      this.lotteryDisabled = true
+      this.noyify("LOTTERY...")
       //retrieve random 
       window.contract
         .get_random({ account_id: window.accountId })
         .then((random) => {
           this.$children[1].updateState()
-          alert(random)
+          this.noyify(random)
+          this.lotteryDisabled = false
         })
     },
   },

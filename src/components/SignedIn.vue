@@ -4,6 +4,7 @@
       <div class="col">
         <div class="card text-white bg-secondary mb-3" style="max-width: 20rem;">
           <div class="card-header">
+            <font-awesome-icon icon="fa-solid fa-fish" />
             Aquarium 
             <div class="float-end">
               <button class="btn btn-outline-success btn-sm" v-on:click="harvest">
@@ -37,6 +38,7 @@
       <div class="col">
         <div class="card text-white bg-secondary mb-3" style="max-width: 20rem;">
           <div class="card-header">
+            <font-awesome-icon icon="fa-solid fa-vault" />
             Vault 
             <div class="float-end">
               <button class="btn btn-outline-success btn-sm" v-on:click="harvest_stake">
@@ -192,6 +194,9 @@ export default {
   },
 
   methods: {
+    notify() {
+      //
+    },
     updateState() {
       window.contract.get_caviar({ account_id: window.accountId })
         .then((caviar) => {
