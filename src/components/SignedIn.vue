@@ -71,7 +71,10 @@
       </div>
       <div class="col">
         <div class="card text-white bg-secondary mb-3" style="max-width: 20rem;">
-          <div class="card-header">Swap Assets</div>
+          <div class="card-header">
+            <font-awesome-icon icon="fa-solid fa-rotate" />
+            Swap Assets
+          </div>
           <div class="card-body" style="padding:0.5rem;">
             <ul class="list-group">
               <li class="list-group-item d-flex justify-content-between align-items-center">
@@ -97,7 +100,10 @@
       </div>
       <div class="col">
         <div class="card text-white bg-secondary mb-3" style="max-width: 20rem;">
-          <div class="card-header">Exchange CAVIAR & FISHA</div>
+          <div class="card-header">
+            <font-awesome-icon icon="fa-solid fa-right-left" />
+            Exchange CAVIAR & FISHA
+          </div>
           <div class="card-body" style="padding:0.5rem;">
             <ul class="list-group">
               <li class="list-group-item d-flex justify-content-between align-items-center">
@@ -194,8 +200,8 @@ export default {
   },
 
   methods: {
-    notify() {
-      //
+    notify(alertText) {
+      this.$parent.noyify(alertText);
     },
     updateState() {
       window.contract.get_caviar({ account_id: window.accountId })
@@ -228,7 +234,7 @@ export default {
         .swap_caviar_to_nemo({ account_id: window.accountId })
         .then((amount) => {
           this.updateState()
-          alert("you got: " + amount + " nemo")
+          this.notify("you got: " + amount + " nemo")
         })
     },
     swapNemoToDori(){
@@ -236,7 +242,7 @@ export default {
         .swap_nemo_to_dori({ account_id: window.accountId })
         .then((amount) => {
           this.updateState()
-          alert("you got: " + amount + " dori")
+          this.notify("you got: " + amount + " dori")
         })
     },
     swapDoriToCaptain(){
@@ -244,7 +250,7 @@ export default {
         .swap_dori_to_captain({ account_id: window.accountId })
         .then((amount) => {
           this.updateState()
-          alert("you got: " + amount + " captain")
+          this.notify("you got: " + amount + " captain")
         })
     },
     swapCaptainToAriel(){
@@ -252,7 +258,7 @@ export default {
         .swap_captain_to_ariel({ account_id: window.accountId })
         .then((amount) => {
           this.updateState()
-          alert("you got: " + amount + " ariel")
+          this.notify("you got: " + amount + " ariel")
         })
     },
     harvest() {
@@ -260,7 +266,7 @@ export default {
         .harvest_fish({ account_id: window.accountId })
         .then((amount) => {
           this.updateState()
-          alert("you harvested: " + amount + " caviar")
+          this.notify("you harvested: " + amount + " caviar")
         })
     },
     harvest_stake() {
@@ -268,7 +274,7 @@ export default {
         .harvest_stake({ account_id: window.accountId })
         .then((amount) => {
           this.updateState()
-          alert("you harvested: " + amount + " caviar")
+          this.notify("you harvested: " + amount + " caviar")
         })
     },
     stakeCaviar() {
@@ -276,7 +282,7 @@ export default {
         .stake_caviar({ account_id: window.accountId, amount: parseInt(this.stakeInput.val) })
         .then((amount) => {
           this.updateState()
-          alert("you staked: " + amount + " caviar")
+          this.notify("you staked: " + amount + " caviar")
         })
     },
     unstakeCaviar() {
@@ -284,7 +290,7 @@ export default {
         .unstake_caviar({ account_id: window.accountId })
         .then((amount) => {
           this.updateState()
-          alert("you unstaked: " + amount + " caviar")
+          this.notify("you unstaked: " + amount + " caviar")
         })
     },
     stakePlus() {

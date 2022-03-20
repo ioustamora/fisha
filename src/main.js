@@ -13,6 +13,8 @@ import {
   faMoneyBill1,
   faVault,
   faFish, 
+  faRotate,
+  faRightLeft,
 } from '@fortawesome/free-solid-svg-icons'
 import { faGithubAlt } from '@fortawesome/free-brands-svg-icons'
 
@@ -29,6 +31,8 @@ library.add(
   faRoad,
   faFish,
   faVault,
+  faRotate,
+  faRightLeft,
 )
 
 /* add font awesome icon component */

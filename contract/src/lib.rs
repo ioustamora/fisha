@@ -69,9 +69,10 @@ impl Contract {
     }
 
     ///withdraw(and/or unlock) 1 near from contract to user wallet
-    pub fn unlock(&self) {
+    pub fn unlock(&mut self) {
         let amount: u128 = 1_000_000_000_000_000_000_000_000;
         let account_id = env::signer_account_id();
+        self.lockers.remove(&account_id.clone());
         if self.can_unlock(account_id.clone()) {
             Promise::new(account_id).transfer(amount);
         }
