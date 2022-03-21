@@ -230,6 +230,7 @@ export default {
         })
     },
     swapCaviarToNemo(){
+      this.notify("SWAP caviar to nemo")
       window.contract
         .swap_caviar_to_nemo({ account_id: window.accountId })
         .then((amount) => {
@@ -238,6 +239,7 @@ export default {
         })
     },
     swapNemoToDori(){
+      this.notify("SWAP nemo to dori")
       window.contract
         .swap_nemo_to_dori({ account_id: window.accountId })
         .then((amount) => {
@@ -246,6 +248,7 @@ export default {
         })
     },
     swapDoriToCaptain(){
+      this.notify("SWAP dori to captain")
       window.contract
         .swap_dori_to_captain({ account_id: window.accountId })
         .then((amount) => {
@@ -254,6 +257,7 @@ export default {
         })
     },
     swapCaptainToAriel(){
+      this.notify("SWAP captain to ariel")
       window.contract
         .swap_captain_to_ariel({ account_id: window.accountId })
         .then((amount) => {
@@ -262,6 +266,7 @@ export default {
         })
     },
     harvest() {
+      this.notify("HARVESTING (caviar from aquarium)")
       window.contract
         .harvest_fish({ account_id: window.accountId })
         .then((amount) => {
@@ -270,6 +275,7 @@ export default {
         })
     },
     harvest_stake() {
+      this.notify("HARVESTING (caviar from staked caviar)")
       window.contract
         .harvest_stake({ account_id: window.accountId })
         .then((amount) => {
@@ -278,6 +284,7 @@ export default {
         })
     },
     stakeCaviar() {
+      this.notify("STAKING caviar")
       window.contract
         .stake_caviar({ account_id: window.accountId, amount: parseInt(this.stakeInput.val) })
         .then((amount) => {
@@ -286,6 +293,7 @@ export default {
         })
     },
     unstakeCaviar() {
+      this.notify("UNSTAKING caviar")
       window.contract
         .unstake_caviar({ account_id: window.accountId })
         .then((amount) => {
